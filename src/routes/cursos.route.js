@@ -35,6 +35,15 @@ cursoRoutes.post('/', auth,  async (req, res) => {
 
 
 cursoRoutes.get('/', auth,  async (req, res) => {
+    /*
+      
+    #swagger.parameters['nome'] = {
+            in: 'query',
+            description: 'Filtrar um curso pelo nome',
+            type: 'string'
+    } 
+    */
+
     try {
         let params = {}
 

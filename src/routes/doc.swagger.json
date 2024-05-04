@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Description",
+    "title": "API Escola",
+    "description": "Uma API de exemplo com o básico de express",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
@@ -15,7 +15,7 @@
       "type": "apiKey",
       "in": "header",
       "name": "authorization",
-      "description": "Some description..."
+      "description": "Token de Autenticação"
     }
   },
   "paths": {
@@ -29,34 +29,42 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Adiciona novo Aluno",
+            "description": "Adiciona um novo Aluno",
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "email": {
                   "type": "string",
-                  "example": "John Doe"
+                  "example": "teste123@gmail.com"
                 },
-                "age": {
-                  "type": "number",
-                  "example": 29
-                },
-                "about": {
+                "password": {
                   "type": "string",
-                  "example": ""
+                  "example": "teste123"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Novo Aluno"
+                },
+                "data_nascimento": {
+                  "type": "string",
+                  "example": "1996-12-15"
+                },
+                "celular": {
+                  "type": "string",
+                  "example": "48 9 9999 9999"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88117410"
                 }
               },
               "required": [
-                "name",
-                "age"
+                "email",
+                "password",
+                "nome",
+                "cep"
               ]
             }
-          },
-          {
-            "name": "parameterName",
-            "in": "query",
-            "description": "Some description...",
-            "type": "number"
           }
         ],
         "responses": {
@@ -166,11 +174,6 @@
         "description": "",
         "parameters": [
           {
-            "name": "nome",
-            "in": "query",
-            "type": "string"
-          },
-          {
             "name": "duracao_horas",
             "in": "query",
             "type": "string"
@@ -178,6 +181,12 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "nome",
+            "in": "query",
+            "description": "Filtrar um curso pelo nome",
             "type": "string"
           }
         ],
@@ -253,6 +262,27 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/login/teste/{cep}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "cep",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

@@ -23,6 +23,18 @@
 1. `sequelize-cli db:migrate:undo`
 2. `npx sequelize-cli db:migrate:undo`
 
+## Trabalhando com Seeders
+
+### Criar valores iniciais no banco de dados:
+1. `sequelize db:seed:all`
+2. `npx sequelize db:seed:all`
+
+## Trabalhando com Documentação:
+
+### Gerar o documento do Swagger.json usando o AutoGen
+
+`npm run swagger`
+
 ## Documentação do Sequelize:
 https://sequelize.org/docs/v6/core-concepts/model-basics/
 
@@ -42,3 +54,5 @@ https://sequelize.org/docs/v6/core-concepts/model-basics/
 `npm install axios`
 ### instalar o Swagger UI
 `npm install swagger-ui-express`
+### instalar o Swagger AutoGen para gerar o documento Swagger de forma automatica.
+`npm install swagger-autogen`

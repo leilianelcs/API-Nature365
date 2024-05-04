@@ -2,8 +2,9 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'My API',
-    description: 'Description'
+    title: "API Escola",
+    description: "Uma API de exemplo com o básico de express",
+    version: "1.0.0"
   },
   host: 'localhost:3000',
   security: [{"apiKeyAuth": []}],
@@ -17,7 +18,7 @@ const doc = {
   }
 };
 
-const outputFile = './src/routes/swagger.json';
+const outputFile = './src/routes/doc.swagger.json';
 const routes = ['./src/server.js'];
 
 swaggerAutogen(outputFile, routes, doc);

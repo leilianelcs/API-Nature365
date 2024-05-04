@@ -9,21 +9,20 @@ const alunoRoutes = new Router()
 
 
 alunoRoutes.post('/', async (req, res) => {
-        /*  
+    /*  
             #swagger.tags = ['Aluno'],
             #swagger.parameters['body'] = {
                 in: 'body',
-                description: 'Adiciona novo Aluno',
+                description: 'Adiciona um novo Aluno',
                 schema: {
-                    $name: 'John Doe',
-                    $age: 29,
-                    about: ''
+                    $email: "teste123@gmail.com",
+                    $password: "teste123",
+                    $nome: "Novo Aluno",
+                    data_nascimento: "1996-12-15",
+                    celular: "48 9 9999 9999",
+                    $cep: "88117410"
             }
-        },  #swagger.parameters['parameterName'] = {
-                in: 'query',
-                description: 'Some description...',
-                type: 'number'
-            }
+        }
     */
 
     try {
