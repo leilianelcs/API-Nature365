@@ -1,16 +1,31 @@
 const { Router, query } = require('express') // 
-const Aluno = require('../models/Aluno')
+const Usuario = require('../models/Usuario')
 const axios = require('axios');
 
 const { sign } = require('jsonwebtoken')
 
-const loginRoutes = new Router()
+const loginRoutes = new Router() 
 
-loginRoutes.get('/bem_vindo', (req, res) => {
-    res.json({ name: 'Bem vindo' })
-})
 
 loginRoutes.get('/teste/:cep', async (req, res) => {
+    /*
+    *     #swagger.tags = ['Login']
+    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
+    *     #swagger.parameters['cep'] = {
+    *        in: 'path',
+    *        required: true,
+    *        description: 'CEP para busca de endereço',
+    *        type: 'string',
+    *        pattern: '^[0-9]{5}-[0-9]{3}$'
+    *     }
+    *     #swagger.responses[200] = { 
+    *        description: 'Busca realizada com sucesso.',
+    *        schema: { $ref: '#/definitions/Endereco' }
+    *     }
+    *     #swagger.responses[500] = { 
+    *        description: 'Erro interno do servidor ao processar a solicitação.'
+    *     }
+    */
         const cep = req.params.cep;
 
         try {
@@ -24,7 +39,26 @@ loginRoutes.get('/teste/:cep', async (req, res) => {
 })
 
 
-loginRoutes.get('/map/:cep', async (req, res) => {
+loginRoutes.get('/:cep', async (req, res) => {
+ /*
+    *     #swagger.tags = ['Login']
+    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
+    *     #swagger.parameters['cep'] = {
+    *        in: 'path',
+    *        required: true,
+    *        description: 'CEP para busca de endereço',
+    *        type: 'string',
+    *        pattern: '^[0-9]{5}-[0-9]{3}$'
+    *     }
+    *     #swagger.responses[200] = { 
+    *        description: 'Busca realizada com sucesso.',
+    *        schema: { $ref: '#/definitions/Endereco' }
+    *     }
+    *     #swagger.responses[500] = { 
+    *        description: 'Erro interno do servidor ao processar a solicitação.'
+    *     }
+    */
+
     const cep = req.params.cep;
     
     try {
@@ -48,7 +82,41 @@ loginRoutes.get('/map/:cep', async (req, res) => {
     }
 })
 
+
 loginRoutes.post('/', async (req, res) => {
+ /*
+    *     #swagger.tags = ['Login']
+    *     #swagger.description = 'Autenticação de usuário.'
+    *     #swagger.parameters['body'] = {
+    *         in: 'body',
+    *         description: 'Dados de autenticação',
+    *         schema: {
+    *             email: 'seuemailaqui@gmail.com',
+    *             password: 'Senha de acesso do usuário com 6 dígitos'
+    *         },
+    *         example: {
+    *             email: 'usuario@example.com',
+    *             password: '123456'
+    *         }
+    *     }
+    *     #swagger.responses[200] = { 
+    *         description: 'Autenticação bem-sucedida.',
+    *         schema: {
+    *             Token: 'token_jwt_aqui'
+    *         }
+    *     }
+    *     #swagger.responses[400] = { 
+    *         description: 'Requisição inválida. Verifique os parâmetros.'
+    *     }
+    *     #swagger.responses[404] = { 
+    *         description: 'Usuário não encontrado.'
+    *     }
+    *     #swagger.responses[500] = { 
+    *         description: 'Erro interno do servidor.'
+    *     }
+    */
+
+
     try {
         const email = req.body.email
         const password = req.body.password
@@ -61,15 +129,25 @@ loginRoutes.post('/', async (req, res) => {
             return res.status(400).json({ message: 'O password é obrigatório' })
         }
 
-        const aluno = await Aluno.findOne({
+
+        //Validação de email e senha
+        if (!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            return res.status(400).json({ message: 'O formato do email não está correto' })
+        }
+        
+        if (!password.match(/^\d{6}$/)) {
+           return res.status(400).json({ message: 'A senha deve conter exatamente 6 dígitos' })
+        }
+             
+        const usuario = await Usuario.findOne({
             where: {email:email, password:password}
         })
 
-        if(!aluno){
-            return res.status(404).json({ error: 'Nenhum aluno corresponde a email e senha fornecidos!' })
+        if(!usuario){
+            return res.status(404).json({ error: 'Nenhum usuário corresponde a email e senha fornecidos!' })
         }
 
-        const payload = {sub: aluno.id, email: aluno.email, nome: aluno.nome}
+        const payload = {sub: usuario.id, email: usuario.email, nome: usuario.nome}
 
         const token = sign(payload, process.env.SECRET_JWT)        
 
@@ -80,7 +158,5 @@ loginRoutes.post('/', async (req, res) => {
     }
 })
 
+module.exports = loginRoutes 
 
-
-
-module.exports = loginRoutes

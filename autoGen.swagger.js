@@ -2,8 +2,8 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: "API Escola",
-    description: "Uma API de exemplo com o básico de express",
+    title: "Nature365",
+    description: "API Rest para o projeto final do módulo 1 do #FloripaMaisTec",
     version: "1.0.0"
   },
   host: 'localhost:3000',
