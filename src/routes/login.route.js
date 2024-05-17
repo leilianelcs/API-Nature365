@@ -7,82 +7,6 @@ const { sign } = require('jsonwebtoken')
 const loginRoutes = new Router() 
 
 
-loginRoutes.get('/teste/:cep', async (req, res) => {
-    /*
-    *     #swagger.tags = ['Login']
-    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
-    *     #swagger.parameters['cep'] = {
-    *        in: 'path',
-    *        required: true,
-    *        description: 'CEP para busca de endereço',
-    *        type: 'string',
-    *        pattern: '^[0-9]{5}-[0-9]{3}$'
-    *     }
-    *     #swagger.responses[200] = { 
-    *        description: 'Busca realizada com sucesso.',
-    *        schema: { $ref: '#/definitions/Endereco' }
-    *     }
-    *     #swagger.responses[500] = { 
-    *        description: 'Erro interno do servidor ao processar a solicitação.'
-    *     }
-    */
-        const cep = req.params.cep;
-
-        try {
-            const resultado = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
-            console.log(resultado.data)
-            res.status(200).json(resultado.data);
-        } catch (error) {
-            console.error('Erro ao consultar o CEP:', error);
-            res.status(500).send({ error: 'Erro ao processar a solicitação' });
-        }
-})
-
-
-loginRoutes.get('/:cep', async (req, res) => {
- /*
-    *     #swagger.tags = ['Login']
-    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
-    *     #swagger.parameters['cep'] = {
-    *        in: 'path',
-    *        required: true,
-    *        description: 'CEP para busca de endereço',
-    *        type: 'string',
-    *        pattern: '^[0-9]{5}-[0-9]{3}$'
-    *     }
-    *     #swagger.responses[200] = { 
-    *        description: 'Busca realizada com sucesso.',
-    *        schema: { $ref: '#/definitions/Endereco' }
-    *     }
-    *     #swagger.responses[500] = { 
-    *        description: 'Erro interno do servidor ao processar a solicitação.'
-    *     }
-    */
-
-    const cep = req.params.cep;
-    
-    try {
-        // Consulta o CEP na API Nominatim para obter as coordenadas
-        const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
-        
-        if (response.data && response.data.length > 0) {
-            // Extrai as coordenadas do resultado da consulta
-            const { lat, lon } = response.data[0];
-          
-            // Gera o link do Google Maps com as coordenadas
-            const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-
-            res.send({ googleMapsLink });
-        } else {
-            res.status(404).send({ error: 'CEP não encontrado' });
-        }
-    } catch (error) {
-        console.error('Erro ao consultar o CEP:', error);
-        res.status(500).send({ error: 'Erro ao processar a solicitação' });
-    }
-})
-
-
 loginRoutes.post('/', async (req, res) => {
  /*
     *     #swagger.tags = ['Login']
@@ -158,5 +82,5 @@ loginRoutes.post('/', async (req, res) => {
     }
 })
 
-module.exports = loginRoutes 
+module.exports = loginRoutes  
 

@@ -20,7 +20,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"id_usuario\": \"3\",\r\n\"nome_rota\": \"Ilha do Campeche\",\r\n\"descricao\": \"Ilha preservada com trilhas e praias\",\r\n\"localizacao\": \"Ilha do Campeche\",\r\n\"cep\": \"88117-410\"\r\n\r\n}\r\n",
+					"raw": "{\r\n\"id_usuario\": \"20\",\r\n\"nome_rota\": \"Ilha do Campeche\",\r\n\"descricao\": \"Ilha preservada com trilhas e praias\",\r\n\"localizacao\": \"Ilha do Campeche\",\r\n\"cep\": \"88117-410\"\r\n\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +70,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"julianojcn3@gmail.com\",\n    \"password\": \"654321\",\n    \"nome\": \"Juliano Nascimento\",\n    \"sexo\": \"Msculino\",\n    \"CPF\": \"111.222.333-44\",\n    \"data_nascimento\": \"1986-04-17\",\n    \"celular\": \"48 9 9999 9999\",\n    \"cep\": \"88117410\",\n    \"endereco\": \"Minha casa\"\n}",
+					"raw": "{\n    \"email\": \"leili@gmail.com\",\n    \"password\": \"123456\",\n    \"nome\": \"Leiliane Costa\",\n    \"sexo\": \"Feminino\",\n    \"CPF\": \"111.222.333-44\",\n    \"data_nascimento\": \"1985-04-11\",\n    \"celular\": \"48 9 9999 9999\",\n    \"cep\": \"88117-410\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -106,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"leiliane_sa@estudante.sesisenai.org.br\",\r\n    \"password\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"email\": \"leiliane@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -275,7 +275,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/locais/2",
+					"raw": "http://localhost:3000/locais/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -283,7 +283,7 @@
 					"port": "3000",
 					"path": [
 						"locais",
-						"2"
+						"3"
 					]
 				}
 			},
@@ -318,16 +318,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/login/map/88117410",
+					"raw": "http://localhost:3000/locais/maps/88010000",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"login",
-						"map",
-						"88117410"
+						"locais",
+						"maps",
+						"88010000"
 					]
 				}
 			},
@@ -362,16 +362,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/login/map/88117410",
+					"raw": "http://localhost:3000/locais/cep/88010000",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"login",
-						"map",
-						"88117410"
+						"locais",
+						"cep",
+						"88010000"
 					]
 				}
 			},
@@ -405,7 +405,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"leilianelcs@gmail.com\",\n    \"password\": \"123456\",\n    \"nome\": \"Leiliane Costa de Sá\",\n    \"sexo\": \"Feminino\",\n    \"CPF\": \"111.222.333-44\",\n    \"data_nascimento\": \"1985-04-11T00:00:00.000Z\",\n    \"celular\": \"48 9 9999 9999\",\n    \"cep\": \"88010000\"\n}",
+					"raw": "{\n    \"id\": 1,\n    \"email\": \"leiliane@gmail.com\",\n    \"password\": \"123456\",\n    \"nome\": \"Leiliane Costa\",\n    \"sexo\": \"Feminino\",\n    \"CPF\": \"12345678910\",\n    \"data_nascimento\": \"1985-04-11\",\n    \"celular\": \"48 9 9999 9999\",\n    \"cep\": \"88010-000\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -413,7 +413,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/usuarios/6",
+					"raw": "http://localhost:3000/usuarios/12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -421,7 +421,7 @@
 					"port": "3000",
 					"path": [
 						"usuarios",
-						"6"
+						"12"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -441,7 +441,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id_usuario\": \"2\",\r\n    \"nome_rota\": \"Praia da Joaquina\",\r\n    \"descricao\": \"Uma praia paradisíaca, ícone de Floripa\",\r\n    \"localizacao\": \"Praia da Joaquina\",\r\n    \"cep\": \"88117410\"\r\n}",
+					"raw": "{\r\n    \"id_usuario\": \"1\",\r\n    \"nome_rota\": \"Projeto Lontra\",\r\n    \"descricao\": \"Centro de reabilitação e observação de lontras\",\r\n    \"localizacao\": \"R. Florianópolis\",\r\n    \"cep\": \"88117-410\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -449,7 +449,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/locais/3",
+					"raw": "http://localhost:3000/locais/16",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -457,7 +457,7 @@
 					"port": "3000",
 					"path": [
 						"locais",
-						"3"
+						"16"
 					]
 				}
 			},

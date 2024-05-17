@@ -22,7 +22,7 @@
     "/usuarios/": {
       "post": {
         "tags": [
-          "Usuario"
+          "Usuário"
         ],
         "description": "",
         "parameters": [
@@ -33,28 +33,28 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "example": "seuemailaqui@gmail.com"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "123456"
                 },
                 "nome": {
-                  "example": "any"
+                  "example": "Leiliane Costa de Sá"
                 },
                 "sexo": {
-                  "example": "any"
+                  "example": "Feminino"
                 },
                 "CPF": {
-                  "example": "any"
+                  "example": "123.456.789-10"
                 },
                 "data_nascimento": {
-                  "example": "any"
+                  "example": "2024-12-30"
                 },
                 "celular": {
-                  "example": "any"
+                  "example": "48 99999-9999"
                 },
                 "cep": {
-                  "example": "any"
+                  "example": "88010-000"
                 }
               }
             }
@@ -74,7 +74,7 @@
       },
       "get": {
         "tags": [
-          "Usuario"
+          "Usuário"
         ],
         "description": "",
         "parameters": [
@@ -97,7 +97,7 @@
     "/usuarios/{id}": {
       "get": {
         "tags": [
-          "Usuario"
+          "Usuário"
         ],
         "description": "",
         "parameters": [
@@ -130,7 +130,7 @@
       },
       "put": {
         "tags": [
-          "Usuario"
+          "Usuário"
         ],
         "description": "",
         "parameters": [
@@ -144,11 +144,35 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "endereco": {
+                  "example": "any"
+                },
+                "latitude": {
+                  "example": "any"
+                },
+                "longitude": {
+                  "example": "any"
+                },
+                "cep": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -163,7 +187,7 @@
       },
       "delete": {
         "tags": [
-          "Usuario"
+          "Usuário"
         ],
         "description": "Exclui um usuário pelo ID fornecido.",
         "parameters": [
@@ -190,6 +214,57 @@
         "security": []
       }
     },
+    "/locais/cep/{cep}": {
+      "get": {
+        "tags": [
+          "Busca CEP"
+        ],
+        "description": "Busca informações de endereço com base no CEP fornecido.",
+        "parameters": [
+          {
+            "name": "cep",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/locais/maps/{cep}": {
+      "get": {
+        "tags": [
+          "Busca CEP"
+        ],
+        "description": "Busca informações de endereço com base no CEP fornecido.",
+        "parameters": [
+          {
+            "name": "cep",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/locais/": {
       "post": {
         "tags": [
@@ -204,19 +279,19 @@
               "type": "object",
               "properties": {
                 "id_usuario": {
-                  "example": "any"
+                  "example": "10"
                 },
                 "nome_rota": {
-                  "example": "any"
+                  "example": "Parque Estadual do Rio Vermelho"
                 },
                 "descricao": {
-                  "example": "any"
+                  "example": "Reserva com fauna diversificada"
                 },
                 "localizacao": {
-                  "example": "any"
+                  "example": "Rod. João Gualberto, 123"
                 },
                 "cep": {
-                  "example": "any"
+                  "example": "88010-000"
                 }
               }
             }
@@ -241,16 +316,6 @@
         "description": "",
         "parameters": [
           {
-            "name": "nome",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "duracao_horas",
-            "in": "query",
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -262,9 +327,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -382,214 +444,7 @@
         }
       }
     },
-    "/login/teste/{cep}": {
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Busca informações de endereço com base no CEP fornecido.",
-        "parameters": [
-          {
-            "name": "cep",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/{cep}": {
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Busca informações de endereço com base no CEP fornecido.",
-        "parameters": [
-          {
-            "name": "cep",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/login/": {
-      "post": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Autenticação de usuário.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/map/teste/{cep}": {
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Busca informações de endereço com base no CEP fornecido.",
-        "parameters": [
-          {
-            "name": "cep",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/map/{cep}": {
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Busca informações de endereço com base no CEP fornecido.",
-        "parameters": [
-          {
-            "name": "cep",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/map/": {
-      "post": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Autenticação de usuário.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/teste/teste/{cep}": {
-      "get": {
-        "tags": [
-          "Login"
-        ],
-        "description": "Busca informações de endereço com base no CEP fornecido.",
-        "parameters": [
-          {
-            "name": "cep",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/login/teste/": {
       "post": {
         "tags": [
           "Login"

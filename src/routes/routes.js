@@ -12,8 +12,7 @@ routes.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 routes.use('/usuarios', usuarioRoutes)
 routes.use('/locais', localRoutes)
 routes.use('/login', loginRoutes)
-routes.use('/login/map', loginRoutes)
-routes.use('/login/teste', loginRoutes)
+
 
 
 

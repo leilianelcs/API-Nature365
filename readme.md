@@ -1,14 +1,23 @@
-# Projeto final - Módulo 01 - FMT - FuturoDEV/Nature - Nature365
+# Projeto final - Módulo 01 - FMT - FuturoDEV/Nature - API Rest Nature365 🌳 - Por Leiliane Costa ✒️
 
-Orientações:
+## Apresentação
+Nature365 é uma plataforma digital dedicada à conservação ambiental, oferecendo dados sobre espaços naturais como trilhas, reservas, praias e parques naturais. Possibilita o gerenciamento de usuários e locais, incluindo cadastro, edição e exclusão, além de visualização detalhada de informações pertinentes.
+
+## 🚀 Orientações:
 
 Para o funcionamento completo da API e de todas as suas funcionalidades, seguem algumas extensões e programas necessários:
 
-## Arquivo .env
+## 📋 Instruções para Executar o Sistema 
+
+Primeiro, instale o Node.js e configure o ambiente. 
+Em seguida, configure o banco de dados relacional com o Sequelize. 
+Clone o repositório do GitHub e siga as instruções abaixo para executar localmente. 
+
+## 🔩 Arquivo .env
 No diretório principal, crie um arquivo .env e cole dentro dele o texto que você extrairá do arquivo .env_example
 
 
-## Rodar o repositório: 
+## ⚙️ Rodar o repositório: 
 
 ### Na primeira vez é necessário instalar as dependências:
 1. `npm install`
@@ -18,13 +27,18 @@ No diretório principal, crie um arquivo .env e cole dentro dele o texto que voc
 
 ### Para rodar o repositório em ambiente local
 1. `npm run start:dev`
-2. ou rodar o servidor com o Nodemon: `nodemon index.js`
+2. ou rodar o servidor com o Nodemon: `nodemon src/index.js`
+
+### Teste prático usando Postman
+1. Abra a postman e importe a coleção '[M01] - Projeto API Nature365.postman_collection.json'
+
+### Teste prático usando Swagger UI
+2. Abra seu navegador e acesse 'http://localhost:3000/docs'
 
 
------------------------------------------*----------------------------------------
+----------------------------------------------------*---------------------------------------------------
 
-
-## Facilitadores: 
+## ⌨️ Facilitadores: 
 
 ### Postman
 https://www.postman.com/downloads/
@@ -32,11 +46,16 @@ https://www.postman.com/downloads/
 ### Node JS
 https://nodejs.org/en/download/
 
+### Swagger
+https://swagger.io/tools/swagger-ui/download/
 
------------------------------------------*----------------------------------------
+### Sequelize 
+https://sequelize.org/
 
 
-## Bibliotecas utilizadas durante o projeto:
+----------------------------------------------------*---------------------------------------------------
+
+## 🛠️ Bibliotecas e comandos utilizados no projeto:
 
 ### instalar o express
 `npm install express --save`
@@ -58,14 +77,13 @@ https://nodejs.org/en/download/
 `npm install --save-dev swagger-autogen`
 ### instalar o Nodemon
 `npm install -g nodemon`
-### instalar o Yup
-`npm install yup`
 
------------------------------------------*----------------------------------------
 
-## Alguns comandos utilizadas durante o projeto:
+----------------------------------------------------*---------------------------------------------------
 
-## Trabalhando com migrations:
+## 🔧 Alguns comandos utilizados durante a elaboração do projeto:
+
+### Trabalhando com migrations:
 ### Criar uma migration
 1. `sequelize migration:generate --name nome_da_migracao`
 2. `npx sequelize-cli migration:generate --name criar_tabela_alunos`
@@ -78,13 +96,29 @@ https://nodejs.org/en/download/
 ### Reverter todas as migration:
 1. `sequelize-cli db:migrate:undo:all`
 
-## Trabalhando com Seeders
+### Trabalhando com Seeders
 ### Criar valores iniciais no banco de dados:
+Use este comando no terminal para iniciar o banco de dados já com alguns usuários e locais cadastrados.
 1. `sequelize db:seed:all`
 2. `npx sequelize db:seed:all`
 
-## Trabalhando com Documentação:
+### Trabalhando com Documentação:
 ### Gerar o documento do Swagger.json usando o AutoGen
 1. `npm run swagger`
 
------------------------------------------*----------------------------------------
+
+----------------------------------------------------*---------------------------------------------------
+
+### 🖇️ Projeto orientado por:
+Profº Hawan Hawangledt S. de Campos
+Profº Douglas Cavalcante
+
+
+----------------------------------------------------*---------------------------------------------------
+
+### 👊 Contribuições 💡 
+O projeto ainda carece de melhorias, algumas imediatas, como validações com yup e uso de controllers.
+Fique à vontade para sugerir ideias e me ajudar a deixar o Nature365 mais completo e funcional!
+Desde já, obrigada! 
+
+----------------------------------------------------*---------------------------------------------------

@@ -1,13 +1,90 @@
 const { Router, query } = require('express')
 const Local = require('../models/Local')
+const Usuario = require('../models/Usuario')
+const axios = require('axios')
 
+const { sign } = require('jsonwebtoken') 
 const { auth } = require('../middleware/auth')
-const { axios } = require('axios')
 const { openStreetMap } = require('../service/map.service')
 
 
 const localRoutes = new Router()
 
+
+localRoutes.get('/cep/:cep', async (req, res) => {
+    /*
+    *     #swagger.tags = ['Busca CEP']
+    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
+    *     #swagger.parameters['cep'] = {
+    *        in: 'path',
+    *        required: true,
+    *        description: 'CEP para busca de endereço',
+    *        type: 'string',
+    *        pattern: '^[0-9]{5}-[0-9]{3}$'
+    *     }
+    *     #swagger.responses[200] = { 
+    *        description: 'Busca realizada com sucesso.',
+    *        schema: { $ref: '#/definitions/Endereco' }
+    *     }
+    *     #swagger.responses[500] = { 
+    *        description: 'Erro interno do servidor ao processar a solicitação.'
+    *     }
+    */
+        const cep = req.params.cep;
+
+        try {
+            const resultado = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
+            console.log(resultado.data)
+            res.status(200).json(resultado.data);
+        } catch (error) {
+            console.error('Erro ao consultar o CEP:', error);
+            res.status(500).send({ error: 'Erro ao processar a solicitação' });
+        }
+})
+
+
+localRoutes.get('/maps/:cep', async (req, res) => {
+ /*
+    *     #swagger.tags = ['Busca CEP']
+    *     #swagger.description = 'Busca informações de endereço com base no CEP fornecido.'
+    *     #swagger.parameters['cep'] = {
+    *        in: 'path',
+    *        required: true,
+    *        description: 'CEP para busca de endereço',
+    *        type: 'string',
+    *        pattern: '^[0-9]{5}-[0-9]{3}$'
+    *     }
+    *     #swagger.responses[200] = { 
+    *        description: 'Busca realizada com sucesso.',
+    *        schema: { $ref: '#/definitions/Endereco' }
+    *     }
+    *     #swagger.responses[500] = { 
+    *        description: 'Erro interno do servidor ao processar a solicitação.'
+    *     }
+    */
+
+    const cep = req.params.cep;
+    
+    try {
+        // Consulta o CEP na API Nominatim para obter as coordenadas
+        const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
+                
+        if (response.data && response.data.length > 0) {
+            // Extrai as coordenadas do resultado da consulta
+            const { lat, lon } = response.data[0];
+          
+            // Gera o link do Google Maps com as coordenadas
+            const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+
+            res.send({ googleMapsLink });
+        } else {
+            res.status(404).send({ error: 'CEP não encontrado' });
+        }
+    } catch (error) {
+        console.error('Erro ao consultar o CEP:', error);
+        res.status(500).send({ error: 'Erro ao processar a solicitação' });
+    }
+})
 
 
 localRoutes.post('/', async (req, res) => {
@@ -77,32 +154,14 @@ localRoutes.get('/', auth,  async (req, res) => {
     *     #swagger.tags = ['Local'],
     *      #swagger.parameters['nome'] = {
     *        in: 'query',
-    *        description: 'Filtrar local pelo nome',
+    *        description: 'Filtrar local',
     *        type: 'string'
     *} 
     */
-    try {
-        let params = {}
-
-        if (req.query.nome) {
-            params = { ...params, nome: req.query.nome }
-        }
-
-        if (req.query.duracao_horas) {
-            params = { ...params, duracao_horas: req.query.duracao_horas }
-        }
-
-        const locais = await Local.findAll({
-            where: params
-        })
-
+        const locais = await Local.findAll()
         res.json(locais)
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ error: 'Não foi possível listar todos os locais', error: error.message })
-    }
-});
-
+    })
+    
 
 localRoutes.get('/:id', auth, async (req, res) => {
     /*

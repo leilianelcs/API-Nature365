@@ -10,17 +10,17 @@ const usuarioRoutes = new Router()
 
 usuarioRoutes.post('/', async (req, res) => {
     /* 
-    *        #swagger.tags = ['Usuario'],
+    *        #swagger.tags = ['Usuário'],
     *        #swagger.parameters['body'] = {
     *            in: 'body',
     *            description: 'Adiciona um novo Usuário',
     *            schema: {
-    *                $email: "seuemailaqui@gmail.com",
+    *                $email: seuemailaqui@gmail.com,
     *                $password: "Senha de acesso do usuário com 6 dígitos",
     *                $nome: "Leiliane Costa de Sá",
     *                $sexo: "Feminino",
     *                $CPF: "123.456.789-10",
-    *                data_nascimento: "2024-12-25",
+    *                $data_nascimento: "2024-12-25",
     *                celular: "48 9 9999 9999",
     *                $cep: "88010-000"
     *        }
@@ -105,7 +105,7 @@ usuarioRoutes.post('/', async (req, res) => {
 
 usuarioRoutes.get('/', auth, async (req, res) => {
 /*
-    *     #swagger.tags = ['Usuario'],
+    *     #swagger.tags = ['Usuário'],
     *      #swagger.parameters['nome'] = {
     *        in: 'query',
     *        description: 'Filtrar usuários',
@@ -121,7 +121,7 @@ usuarioRoutes.get('/', auth, async (req, res) => {
 
 usuarioRoutes.get('/:id', auth, async (req, res) => {
 /*
-    *     #swagger.tags = ['Usuario'],
+    *     #swagger.tags = ['Usuário'],
     *      #swagger.parameters['nome'] = {
     *        in: 'query',
     *        description: 'Filtrar usuário pelo ID do usuário',
@@ -149,48 +149,96 @@ usuarioRoutes.get('/:id', auth, async (req, res) => {
     }
 })
 
-
 usuarioRoutes.put('/:id', auth, async (req, res) => {
-/* 
-    *        #swagger.tags = ['Usuario'],
-    *        #swagger.parameters['body'] = {
-    *            in: 'body',
-    *            description: 'Altera um Usuário',
-    *            schema: {
-    *                $email: "seuemailaqui@gmail.com",
-    *                $password: "Senha de acesso do usuário com 6 dígitos",
-    *                $nome: "Leiliane Costa de Sá",
-    *                $sexo: "Feminino",
-    *                $CPF: "123.456.789-10",
-    *                data_nascimento: "2024-12-25",
-    *                celular: "48 9 9999 9999",
-    *                $cep: "88010-000"
-    *        }
-    *    }
-    */
-    
+    // /* 
+//     *        #swagger.tags = ['Usuário'],
+//     *        #swagger.parameters['body'] = {
+//     *            in: 'body',
+//     *            description: 'Altera um Usuário',
+//     *            schema: {
+//     *                $email: "seuemailaqui@gmail.com",
+//     *                $password: "Senha de acesso do usuário com 6 dígitos",
+//     *                $nome: "Leiliane Costa de Sá",
+//     *                $sexo: "Feminino",
+//     *                $CPF: "123.456.789-10",
+//     *                data_nascimento: "2024-12-25",
+//     *                celular: "48 9 9999 9999",
+//     *                $cep: "88010-000"
+//     *        }
+//     *    }
+//     */
     const { id } = req.params;
+    const { cep } = req.body;
 
     try {
         const usuario = await Usuario.findByPk(id);
-
         if (!usuario) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
         }
 
-        await usuario.update(req.body);
+        // Se o CEP for fornecido, consulta o serviço de mapa
+        if (cep) {
+            const resposta = await openStreetMap(cep);
+            if (resposta && resposta.display_name) {
+                req.body.endereco = resposta.display_name;
+                req.body.latitude = resposta.lat;
+                req.body.longitude = resposta.lon;
+            } else {
+                return res.status(400).json({ message: 'CEP inválido ou não encontrado' });
+            }
+        }
 
+        // Atualiza o usuário com os novos dados, incluindo display_name, latitude e longitude
+        await usuario.update(req.body);
         res.json(usuario);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Não foi possível atualizar o usuário', error: error.message });
     }
-})
+});
+
+
+// usuarioRoutes.put('/:id', auth, async (req, res) => {
+// /* 
+//     *        #swagger.tags = ['Usuário'],
+//     *        #swagger.parameters['body'] = {
+//     *            in: 'body',
+//     *            description: 'Altera um Usuário',
+//     *            schema: {
+//     *                $email: 'seuemailaqui@gmail.com',
+//     *                $password: "Senha de acesso do usuário com 6 dígitos",
+//     *                $nome: "Leiliane Costa de Sá",
+//     *                $sexo: "Feminino",
+//     *                $CPF: "123.456.789-10",
+//     *                data_nascimento: "2024-12-25",
+//     *                celular: "48 9 9999 9999",
+//     *                $cep: "88010-000"
+//     *        }
+//     *    }
+//     */
+    
+//     const { id } = req.params;
+
+//     try {
+//         const usuario = await Usuario.findByPk(id);
+
+//         if (!usuario) {
+//             return res.status(404).json({ message: 'Usuário não encontrado' });
+//         }
+
+//         await usuario.update(req.body);
+
+//         res.json(usuario);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Não foi possível atualizar o usuário', error: error.message });
+//     }
+// })
 
 
 usuarioRoutes.delete('/:id', auth, (req, res) => {
  /*
-    *     #swagger.tags = ['Usuario']
+    *     #swagger.tags = ['Usuário']
     *     #swagger.description = 'Exclui um usuário pelo ID fornecido.'
     *     #swagger.parameters['id'] = {
     *         in: 'path',
